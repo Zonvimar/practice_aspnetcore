@@ -1,0 +1,206 @@
+﻿@model IEnumerable<WebApplication1.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    /* Стили для компактной фильтрации */
+    .filter-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .filter-group label {
+            color: #fffcea;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            background-color: #212121;
+            color: #fffcea;
+            border: 1px solid #444;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+            .filter-group input:focus,
+            .filter-group select:focus {
+                border-color: #8977dc;
+                outline: none;
+                box-shadow: 0 0 5px #8977dc;
+            }
+
+    .filter-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .filter-btn-box {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .filter-buttons .btn {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #8977dc; /* Основной цвет кнопки */
+        border-color: #8977dc; /* Цвет границы */
+        color: #fffcea; /* Цвет текста */
+        font-weight: bold; /* Жирный текст */
+        padding: 8px 12px; /* Отступы внутри кнопки */
+        border-radius: 4px; /* Закругленные углы */
+        transition: background-color 0.3s ease; /* Плавное изменение цвета при наведении */
+    }
+
+        .btn-primary:hover {
+            background-color: #6a5acd; /* Цвет кнопки при наведении (немного темнее) */
+            border-color: #6a5acd; /* Цвет границы при наведении */
+        }
+</style>
+
+<h1 style="color: #fffcea;">Услуги</h1>
+
+<form asp-action="Index" method="get">
+    <div class="filter-container">
+        <div class="filter-group">
+            <label for="searchString">Поиск по названию:</label>
+            <input type="text" id="searchString" name="searchString" value="@ViewData["searchString"]">
+        </div>
+        <div class="filter-group">
+            <label for="categoryId">Категория:</label>
+            @Html.DropDownList("categoryId", (SelectList)ViewData["idCategory"], "-", new { @class = "form-control" })
+        </div>
+        <div class="filter-group">
+            <label for="employeeId">Сотрудник:</label>
+            @Html.DropDownList("employeeId", (SelectList)ViewData["idEmployee"], "-", new { @class = "form-control" })
+        </div>
+        <div class="filter-group">
+            <label for="roomId">Тип комнаты:</label>
+            @Html.DropDownList("roomId", (SelectList)ViewData["idRoom"], "-", new { @class = "form-control" })
+        </div>
+        <div class="filter-group">
+            <label for="promotionId">Акция:</label>
+            @Html.DropDownList("promotionId", (SelectList)ViewData["idPromotion"], "-", new { @class = "form-control" })
+        </div>
+        <div class="filter-group">
+            <label for="clientGroupId">Группа клиентов:</label>
+            @Html.DropDownList("clientGroupId", (SelectList)ViewData["idClientGroup"], "-", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="filter-btn-box">
+        <div class="filter-buttons">
+            <button type="submit" class="btn btn-primary">Применить</button>
+            <a asp-action="Index" class="btn btn-secondary">Сбросить</a>
+        </div>
+        @if (User.IsInRole("1")) 
+        { 
+            <div class="filter-buttons"> 
+                 <a asp-action="Create" class="btn btn-success">Добавить</a> 
+             </div> 
+         } 
+    </div>
+</form>
+<table class="table" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th style="color: #fffcea;">
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["NameSortParam"]"
+                   asp-route-searchString="@Context.Request.Query["searchString"]"
+                   asp-route-categoryId="@Context.Request.Query["categoryId"]"
+                   asp-route-employeeId="@Context.Request.Query["employeeId"]"
+                   asp-route-roomId="@Context.Request.Query["roomId"]"
+                   asp-route-promotionId="@Context.Request.Query["promotionId"]"
+                   asp-route-clientGroupId="@Context.Request.Query["clientGroupId"]"
+                   style="color: #fffcea; text-decoration: none;">
+                    Название услуги
+                    @if (ViewData["CurrentSort"] != null)
+                    {
+                        if (ViewData["CurrentSort"].ToString() == "name_asc")
+                        {
+                            <span>↑</span>
+                        }
+                        else if (ViewData["CurrentSort"].ToString() == "name_desc")
+                        {
+                            <span>↓</span>
+                        }
+                    }
+                </a>
+            </th>
+            <th style="color: #fffcea;">
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["PriceSortParam"]"
+                   asp-route-searchString="@Context.Request.Query["searchString"]"
+                   asp-route-categoryId="@Context.Request.Query["categoryId"]"
+                   asp-route-employeeId="@Context.Request.Query["employeeId"]"
+                   asp-route-roomId="@Context.Request.Query["roomId"]"
+                   asp-route-promotionId="@Context.Request.Query["promotionId"]"
+                   asp-route-clientGroupId="@Context.Request.Query["clientGroupId"]"
+                   style="color: #fffcea; text-decoration: none;">
+                    Цена
+                    @if (ViewData["CurrentSort"] != null)
+                    {
+                        if (ViewData["CurrentSort"].ToString() == "price_asc")
+                        {
+                            <span>↑</span>
+                        }
+                        else if (ViewData["CurrentSort"].ToString() == "price_desc")
+                        {
+                            <span>↓</span>
+                        }
+                    }
+                </a>
+            </th>
+            <th style="color: #fffcea;">Категория</th>
+            <th style="color: #fffcea;">Сотрудник</th>
+            <th style="color: #fffcea;">Тип комнаты</th>
+            <th style="color: #fffcea;">Акция</th>
+            <th style="color: #fffcea;">Группа клиентов</th>
+            <th style="color: #fffcea;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="border-bottom: 1px solid #8977dc;">
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.name)</td>
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.price)</td>
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.Category.category)</td>
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.Employee.fullName)</td>
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.RoomType.name)</td>
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.Promotion.name)</td>
+                <td style="color: #fffcea;">@Html.DisplayFor(modelItem => item.ClientGroup.name)</td>
+                <td style="text-align: right;">
+                    @if (User.IsInRole("1"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.idService" style="color: #8977dc; text-decoration: none; margin-right: 10px;">Редактировать</a>
+                    }
+                    @if (User.IsInRole("1"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.idService" style="color: #8977dc; text-decoration: none;">Удалить</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

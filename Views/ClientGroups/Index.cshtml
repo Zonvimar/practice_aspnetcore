@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApplication1.Models.ClientGroup>
+
+@{
+    ViewData["Title"] = "Группы клиентов";
+}
+
+<h1 style="color: #fffcea;">Группы клиентов</h1>
+
+<table class="table" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th style="color: #fffcea;">Название группы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

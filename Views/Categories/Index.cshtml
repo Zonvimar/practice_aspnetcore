@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApplication1.Models.Category>
+
+@{
+    ViewData["Title"] = "Категории";
+}
+
+<h1 style="color: #fffcea;">Категории</h1>
+
+<table class="table" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th style="color: #fffcea;">Название категории</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.category)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

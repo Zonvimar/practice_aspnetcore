@@ -1,0 +1,51 @@
+﻿@model RegisterViewModel
+
+<style>
+    .input-default:focus
+    {
+        border-color: #8977dc;
+        outline: none;
+        box-shadow: 0 0 5px #8977dc;
+    }
+</style>
+
+<div style="text-align: center; margin-top: 9vh;">
+    <h2 style="text-align: center; margin-bottom: 20px; color: #fffcea;">Регистрация</h2>
+
+    <form asp-action="Register" method="post" style="max-width: 400px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+        <div style="margin-bottom: 15px;">
+            <label asp-for="LastName" style="display: block; margin-bottom: 5px; font-weight: bold; color: #fffcea; text-align: left;">Личные данные</label>
+            <input asp-for="LastName" placeholder="Фамилия" class="input-default" style="width: 100%; color: #fffcea; padding: 10px; border-radius: 4px;border: none; box-sizing: border-box; background-color: #212121;" />
+            <span asp-validation-for="LastName" style="color: red; font-size: 12px;"></span>
+        </div>
+        <div style="margin-bottom: 15px;">
+            @* <label asp-for="FirstName" style="display: block; margin-bottom: 5px; font-weight: bold; color: #fffcea; text-align: left;">Имя</label> *@
+            <input asp-for="FirstName" placeholder="Имя" class="input-default" style="width: 100%; color: #fffcea; padding: 10px; border-radius: 4px;border: none; box-sizing: border-box; background-color: #212121;" />
+            <span asp-validation-for="FirstName" style="color: red; font-size: 12px;"></span>
+        </div>
+        <div style="margin-bottom: 15px;">
+            @* <label asp-for="MiddleName" style="display: block; margin-bottom: 5px; font-weight: bold; color: #fffcea; text-align: left;">Отчество</label> *@
+            <input asp-for="MiddleName" placeholder="Отчество" class="input-default" style="width: 100%; color: #fffcea; padding: 10px; border-radius: 4px;border: none; box-sizing: border-box; background-color: #212121;" />
+            <span asp-validation-for="MiddleName" style="color: red; font-size: 12px;"></span>
+        </div>
+        <div style="margin-bottom: 15px;">
+            @* <label asp-for="Email" style="display: block; margin-bottom: 5px; font-weight: bold; color: #fffcea; text-align: left;">Электронная почта</label> *@
+            <input asp-for="Email" placeholder="Ваша электронная почта" class="input-default" style="width: 100%; color: #fffcea; padding: 10px; border-radius: 4px;border: none; box-sizing: border-box; background-color: #212121;" />
+            <span asp-validation-for="Email" style="color: red; font-size: 12px;"></span>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label asp-for="Login" style="display: block; margin-bottom: 5px; font-weight: bold; color: #fffcea; text-align: left;">Данные для входа</label>
+            <input asp-for="Login" placeholder="Логин" class="input-default" style="width: 100%; color: #fffcea; padding: 10px; border-radius: 4px;border: none; box-sizing: border-box; background-color: #212121;" />
+            <span asp-validation-for="Login" style="color: red; font-size: 12px;"></span>
+        </div>
+        <div style="margin-bottom: 15px;">
+            @* <label asp-for="Password" style="display: block; margin-bottom: 5px; font-weight: bold; color: #fffcea; text-align: left;">Пароль</label> *@
+            <input asp-for="Password" type="password" placeholder="Пароль" class="input-default" style="width: 100%; color: #fffcea; padding: 10px; border-radius: 4px;border: none; box-sizing: border-box; background-color: #212121;" />
+            <span asp-validation-for="Password" style="color: red; font-size: 12px;"></span>
+        </div>
+        <button type="submit" style="width: 100%; font-weight: bold; padding: 10px; background-color: #8977dc; color: #fffcea; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Зарегистрироваться</button>
+    </form>
+    <div style="text-align: center; margin-top: 10px;">
+        <a asp-action="Login" style="color: #8977dc; text-decoration: none; font-weight: bold;">Уже есть аккаунт?</a>
+    </div>
+</div>

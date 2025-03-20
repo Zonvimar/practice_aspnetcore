@@ -1,0 +1,125 @@
+html {
+    font-size: 14px;
+    background-color: #333333;
+}
+
+body {
+    background-color: #333333;
+    color: #fffcea;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Стили для всех текстовых инпутов и селектов */
+.form-control {
+    color: #fffcea; /* Цвет текста */
+    background-color: #212121; /* Цвет фона */
+    border: 1px solid #444; /* Цвет границы */
+}
+
+    /* Стили для состояния фокуса (когда элемент выбран) */
+.form-control:focus {
+color: #fffcea; /* Цвет текста */
+background-color: #212121; /* Цвет фона */
+border-color: #8977dc; /* Цвет границы при фокусе */
+outline: none; /* Убираем стандартный outline */
+box-shadow: 0 0 5px #8977dc; /* Добавляем свечение для красоты */
+}
+
+/* Стили для дропдаунов */
+.form-control.select {
+color: #fffcea; /* Цвет текста */
+background-color: #212121; /* Цвет фона */
+border: 1px solid #444; /* Цвет границы */
+}
+
+/* Стили для элементов списка в дропдауне */
+.form-control.select option {
+background-color: #212121; /* Цвет фона */
+color: #fffcea; /* Цвет текста */
+}
+
+/* Стили для элементов списка при наведении */
+.form-control.select option:hover {
+    background-color: #8977dc !important; /* Цвет фона при наведении */
+    color: #fffcea !important; /* Цвет текста при наведении */
+}
+
+
+.btn-primary {
+    background-color: #8977dc; /* Основной цвет кнопки */
+    border-color: #8977dc; /* Цвет границы */
+    color: #fffcea; /* Цвет текста */
+    font-weight: bold; /* Жирный текст */
+    padding: 8px 12px; /* Отступы внутри кнопки */
+    border-radius: 4px; /* Закругленные углы */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+
+.btn-primary:hover {
+    background-color: #6a5acd; /* Цвет кнопки при наведении (немного темнее) */
+    border-color: #6a5acd; /* Цвет границы при наведении */
+}
+
+
+
+    
+/* Общие стили для заголовков и текста */
+h1, h2, h3, h4, h5, h6 {
+    color: #fffcea;
+}
+
+
+/* Стили для таблиц */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #8977dc; /* Разделители между записями */
+}
+
+.table th {
+    background-color: #8977dc; /* Заголовки таблиц */
+    color: #fffcea;
+}
+
+.table tr:hover {
+    background-color: #212121; /* Эффект при наведении на строку */
+}
+
+
+.dropdown-menu {
+    background-color: #212121;
+    color: #fffcea;
+}
+
+.dropdown-item {
+    background-color: #212121;
+    color: #fffcea;
+}
+.dropdown-item:hover {
+    background-color: #333333;
+    color: #fffcea;
+}

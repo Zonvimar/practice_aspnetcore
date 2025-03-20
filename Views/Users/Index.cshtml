@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebApplication1.Models.User>
+
+@{
+    ViewData["Title"] = "Пользователи";
+}
+
+<h1 style="color: #fffcea;">Пользователи</h1>
+
+<table class="table" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th style="color: #fffcea;">Логин</th>
+            <th style="color: #fffcea;">Имя</th>
+            <th style="color: #fffcea;">Фамилия</th>
+            <th style="color: #fffcea;">Отчество</th>
+            <th style="color: #fffcea;">Email</th>
+            <th style="color: #fffcea;">Роль</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.login)
+                </td>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.firstName)
+                </td>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.lastName)
+                </td>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.middleName)
+                </td>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.Role.role)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

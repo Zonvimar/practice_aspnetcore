@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApplication1.Models.Employee>
+
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<h1 style="color: #fffcea;">Сотрудники</h1>
+
+<table class="table" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th style="color: #fffcea;">ФИО</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color: #fffcea;">
+                    @Html.DisplayFor(modelItem => item.fullName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
