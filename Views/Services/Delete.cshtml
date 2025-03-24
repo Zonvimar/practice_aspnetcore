@@ -1,0 +1,74 @@
+﻿@model WebApplication1.Models.Service
+
+@{
+    ViewData["Title"] = "Удалить услугу";
+}
+
+<h1 style="color: #fffcea;">Удалить услугу</h1>
+
+<h3 style="color: #fffcea;">Вы уверены, что хотите удалить эту услугу?</h3>
+<div>
+    <hr style="border-color: #8977dc;" />
+    <dl class="row">
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Название</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Описание</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Цена</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.price)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Категория</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.Category.category)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Сотрудник</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.Employee.fullName)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Тип комнаты</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.RoomType.name)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Скидки</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.Promotion.name)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Группа клиентов</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.ClientGroup.name)
+        </dd>
+        <dt class="col-sm-2" style="color: #fffcea;">
+            <p>Длительность(мин)</p>
+        </dt>
+        <dd class="col-sm-10" style="color: #fffcea;">
+            @Html.DisplayFor(model => model.duration)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="idService" />
+        <input type="submit" value="Удалить" class="btn btn-danger" style="background-color: #dc3545; border: 1px solid #dc3545; color: #fffcea;" />
+        <a asp-action="Index" class="btn btn-secondary" style="background-color: #444; border: 1px solid #444; color: #fffcea;">Назад к списку</a>
+    </form>
+</div>

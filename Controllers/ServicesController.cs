@@ -24,9 +24,9 @@ namespace WebApplication1.Controllers
         {
             Console.WriteLine("Index action called.");
 
-            //ViewData["CurrentSort"] = sortOrder;
-            //ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
-            //ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
+            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
 
             var services = _context.services
                 .Include(s => s.Category)
@@ -116,9 +116,15 @@ namespace WebApplication1.Controllers
         // GET: Services/Create
         public IActionResult Create()
         {
-            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "name");
+            //ViewBag.idCategory = new SelectList(_context.categories, "idCategory", "category");
+            //ViewBag.idEmployee = new SelectList(_context.employees, "idEmployee", "fullName");
+            //ViewBag.idRoom = new SelectList(_context.roomTypes, "idRoomType", "name");
+            //ViewBag.idPromotion = new SelectList(_context.promotions, "idPromotion", "name");
+            //ViewBag.idClientGroup = new SelectList(_context.clientGroups, "idClientGroup", "name");
+
+            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "category");
             ViewData["idEmployee"] = new SelectList(_context.employees, "idEmployee", "fullName");
-            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoom", "name");
+            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoomType", "name");
             ViewData["idPromotion"] = new SelectList(_context.promotions, "idPromotion", "name");
             ViewData["idClientGroup"] = new SelectList(_context.clientGroups, "idClientGroup", "name");
             return View();
@@ -131,15 +137,33 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(service);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(service);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Логируем ошибку
+                    Console.WriteLine($"Ошибка при сохранении: {ex.Message}");
+                    ModelState.AddModelError("", "Не удалось сохранить данные. Проверьте введенные значения.");
+                }
             }
-            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "name", service.idCategory);
+
+            // Если модель не прошла валидацию, выводим ошибки
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+
+
+            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "category", service.idCategory);
             ViewData["idEmployee"] = new SelectList(_context.employees, "idEmployee", "fullName", service.idEmployee);
-            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoom", "name", service.idRoom);
+            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoomType", "name", service.idRoom);
             ViewData["idPromotion"] = new SelectList(_context.promotions, "idPromotion", "name", service.idPromotion);
             ViewData["idClientGroup"] = new SelectList(_context.clientGroups, "idClientGroup", "name", service.idClientGroup);
+
             return View(service);
         }
 
@@ -151,16 +175,27 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var service = await _context.services.FindAsync(id);
+            // Загружаем услугу вместе со связанными данными
+            var service = await _context.services
+                .Include(s => s.Category)
+                .Include(s => s.Employee)
+                .Include(s => s.RoomType)
+                .Include(s => s.Promotion)
+                .Include(s => s.ClientGroup)
+                .FirstOrDefaultAsync(m => m.idService == id);
+
             if (service == null)
             {
                 return NotFound();
             }
-            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "name", service.idCategory);
+
+            // Подготавливаем SelectList для выпадающих списков
+            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "category", service.idCategory);
             ViewData["idEmployee"] = new SelectList(_context.employees, "idEmployee", "fullName", service.idEmployee);
-            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoom", "name", service.idRoom);
+            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoomType", "name", service.idRoom);
             ViewData["idPromotion"] = new SelectList(_context.promotions, "idPromotion", "name", service.idPromotion);
             ViewData["idClientGroup"] = new SelectList(_context.clientGroups, "idClientGroup", "name", service.idClientGroup);
+
             return View(service);
         }
 
@@ -194,9 +229,9 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "name", service.idCategory);
+            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "category", service.idCategory);
             ViewData["idEmployee"] = new SelectList(_context.employees, "idEmployee", "fullName", service.idEmployee);
-            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoom", "name", service.idRoom);
+            ViewData["idRoom"] = new SelectList(_context.roomTypes, "idRoomType", "name", service.idRoom);
             ViewData["idPromotion"] = new SelectList(_context.promotions, "idPromotion", "name", service.idPromotion);
             ViewData["idClientGroup"] = new SelectList(_context.clientGroups, "idClientGroup", "name", service.idClientGroup);
             return View(service);

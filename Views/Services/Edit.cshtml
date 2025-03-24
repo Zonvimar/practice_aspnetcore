@@ -1,7 +1,7 @@
 ﻿@model WebApplication1.Models.Service
 
 @{
-    ViewData["Title"] = "Добавить услугу";
+    ViewData["Title"] = "Редактировать услугу";
 }
 
 <style>
@@ -14,21 +14,18 @@
         box-sizing: border-box;
         background-color: #212121;
     }
-    .input-default:focus {
-        border-color: #8977dc;
-        outline: none;
-        box-shadow: 0 0 5px #8977dc;
-    }
 
-    .form-action {
-        max-width: 500px;
-        width: 100%;
-    }
+        .input-default:focus {
+            border-color: #8977dc;
+            outline: none;
+            box-shadow: 0 0 5px #8977dc;
+        }
 </style>
 
-<h1 style="color: #fffcea;">Добавить услугу</h1>
+<h1 style="color: #fffcea;">Редактировать услугу</h1>
 
-<form asp-action="Create" style="form-action">
+<form asp-action="Edit">
+    <input type="hidden" asp-for="idService" />
     <div class="form-group">
         <label asp-for="name" class="control-label" style="color: #fffcea;">Название услуги</label>
         <input asp-for="name" class="form-control input-default" />
@@ -41,7 +38,7 @@
     </div>
     <div class="form-group">
         <label asp-for="price" class="control-label" style="color: #fffcea;">Цена</label>
-        <input asp-for="price" class="form-control input-default"/>
+        <input asp-for="price" class="form-control input-default" />
         <span asp-validation-for="price" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -70,13 +67,7 @@
         <span asp-validation-for="duration" class="text-danger"></span>
     </div>
     <div class="form-group" style="margin-top: 20px;">
-        <input type="submit" value="Создать" class="btn btn-primary" style="background-color: #8977dc; border: 1px solid #8977dc; color: #fffcea;" />
+        <input type="submit" value="Сохранить" class="btn btn-primary" style="background-color: #8977dc; border: 1px solid #8977dc; color: #fffcea;" />
         <a asp-action="Index" class="btn btn-secondary" style="background-color: #444; border: 1px solid #444; color: #fffcea;">Назад к списку</a>
     </div>
 </form>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
